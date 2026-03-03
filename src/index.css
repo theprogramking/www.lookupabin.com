@@ -1,0 +1,251 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Webkit Browsers: Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px; /* vertical scrollbar width */
+  height: 8px; /* horizontal scrollbar height */
+}
+
+::-webkit-scrollbar-button {
+  display: none; /* Hides arrows completely */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* keep track invisible for minimal look */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
+}
+:root {
+  --neu-bg: #0d0e10;
+  --neu-dark: #0d0e10;
+  --neu-light: #15181b;
+  --neu-accent: #7a72ff;
+  --neu-accent2: #ff6f8d;
+  --neu-text: #e6ebf2;
+  --neu-muted: black;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--neu-text);
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Neumorphism base components ─────────────────────────────────────────── */
+
+.neu-bg {
+  background: linear-gradient(to bottom right, #1e3a8a, #1e40af, #1e3b70);
+}
+
+.neu-card {
+  background: #ffffff;
+  border-radius: 20px;
+  transition: box-shadow 0.2s ease;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.neu-card-flat {
+  background: linear-gradient(to bottom right, #1e3a8a, #2563eb, #4f46e5);
+  border-radius: 14px;
+  color: white;
+}
+
+.neu-field-card {
+  color: #000000;
+}
+
+.neu-pill {
+  background: var(--neu-bg);
+  border-radius: 999px;
+}
+
+.neu-input {
+  background: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  padding: 14px 20px;
+  box-shadow:
+    inset 2px 2px 5px var(--neu-dark),
+    inset -2px -2px 5px var(--neu-light);
+  font-family: "DM Mono", monospace;
+  transition: box-shadow 0.2s ease;
+  color: black;
+}
+
+.neu-input:focus {
+  box-shadow:
+    inset 2.5px 2.5px 5.5px var(--neu-dark),
+    inset -2.5px -2.5px 5.5px var(--neu-light),
+    0 0 0 1px color-mix(in srgb, var(--neu-accent) 30%, transparent);
+}
+
+.neu-input::placeholder {
+  color: var(--neu-muted);
+  opacity: 0.6;
+}
+
+.neu-btn-sm {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: "DM Sans", sans-serif;
+  color: #000;
+}
+
+.neu-btn-sm:hover {
+  cursor: pointer;
+}
+
+.neu-inset {
+  background: var(--neu-bg);
+}
+
+/* ─── Spinner ─────────────────────────────────────────────────────────────── */
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--neu-dark);
+  border-top-color: var(--neu-accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Accent overrides ───────────────────────────────────────────────────── */
+
+.text-neu-accent {
+  color: var(--neu-accent);
+}
+.text-neu-text {
+  color: #000000;
+}
+.text-neu-muted {
+  color: var(--neu-muted);
+}
+.text-neu-dark {
+  color: var(--neu-dark);
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.neu-card {
+  animation: fadeSlideUp 0.25s ease forwards;
+}
+
+/* Sample BIN cards */
+.sample-bin-row {
+  display: flex;
+  gap: 12px;
+  color: #fff;
+}
+
+.sample-bin-card {
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  min-width: 160px;
+}
+
+@media (max-width: 640px) {
+  .sample-bin-row {
+    gap: 10px;
+    padding-bottom: 6px;
+  }
+}
+
+.fade-in-up {
+  animation: fadeSlideUp 0.28s ease forwards;
+}
+
+/* make the sample row visually consistent with neumorphism */
+.neu-card .flex > button {
+  border-radius: 12px;
+}
+
+@media (max-width: 480px) {
+  .w-40 {
+    min-width: 140px;
+  }
+}
+
+/* hide native scrollbars but allow scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.touch-pan-x {
+  -webkit-overflow-scrolling: touch;
+}
+
+.neu-card .flex > button:hover {
+  transform: scale(1.03);
+}
+
+/* Modal animation */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.neu-info-btn {
+  transition: all 180ms ease;
+}
+.neu-info-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.06);
+}
+.neu-info-btn:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.12);
+  outline-offset: 2px;
+}

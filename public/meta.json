@@ -1,0 +1,16 @@
+{
+  "count": 374788,
+  "fields": [
+    "Brand",
+    "Type",
+    "Category",
+    "Issuer",
+    "IssuerPhone",
+    "IssuerUrl",
+    "isoCode2",
+    "isoCode3",
+    "CountryName"
+  ],
+  "fieldSep": "\u001f",
+  "buildId": 1772496853453
+}
