@@ -212,10 +212,6 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.neu-card .flex > button:hover {
-  transform: scale(1.03);
-}
-
 /* Modal animation */
 @keyframes modalIn {
   from {

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import LookupWorker from "./worker/lookup.worker?worker";
 import "./index.css";
 
-// TYPES
 type LookupResult = {
   found: boolean;
   bin?: number;
@@ -11,7 +10,6 @@ type LookupResult = {
 };
 type WorkerStatus = "loading" | "ready" | "error";
 
-// LABELS
 const FIELD_LABELS: Record<string, string> = {
   Brand: "Brand",
   Type: "Type",
@@ -24,7 +22,6 @@ const FIELD_LABELS: Record<string, string> = {
   CountryName: "Country",
 };
 
-// ICONS
 const FIELD_ICONS: Record<string, string> = {
   Brand: "💳",
   Type: "⚙️",
@@ -37,7 +34,6 @@ const FIELD_ICONS: Record<string, string> = {
   CountryName: "🌍",
 };
 
-// SAMPLE BINS
 const SAMPLE_BINS = [
   { brand: "VISA", bin: "492494" },
   { brand: "AMEX", bin: "344402" },
@@ -45,7 +41,6 @@ const SAMPLE_BINS = [
   { brand: "DISCOVER", bin: "645844" },
 ];
 
-// BRAND METADATA
 const BRAND_META: Record<string, { gradient: string; label: string }> = {
   visa: { gradient: "linear-gradient(135deg,#2563eb,#1d4ed8)", label: "VISA" },
   mastercard: {
@@ -59,7 +54,6 @@ const BRAND_META: Record<string, { gradient: string; label: string }> = {
   },
 };
 
-// BIN CARD
 const BinCard = ({
   brand,
   bin,
@@ -77,58 +71,25 @@ const BinCard = ({
     <button
       onClick={() => onClick(bin)}
       aria-label={`Try ${brand}`}
-      className="flex-shrink-0 w-40 p-3 rounded-xl flex flex-col items-start gap-2 transition-transform duration-150 hover:scale-105"
+      className="w-full p-3 rounded-xl flex flex-col items-start gap-2 transition-transform duration-150 hover:scale-105"
       style={{ background: meta.gradient }}
     >
       <div className="w-full flex items-center justify-between">
         <div className="font-display font-bold text-sm">{brand}</div>
-        <div className="text-xs font-mono opacity-90">{meta.label}</div>
+        <div className="text-xs">{meta.label}</div>
       </div>
       <div className="mt-2 font-mono text-lg">{bin}</div>
     </button>
   );
 };
 
-// HORIZONTAL SCROLLER
 const ScrollingBinRow = ({ onSelect }: { onSelect: (bin: string) => void }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let raf = 0;
-    let last = performance.now();
-    let paused = false;
-    const speed = 0.03;
-    const step = (t: number) => {
-      const dt = t - last;
-      last = t;
-      if (!paused) {
-        el.scrollLeft += dt * speed;
-        if (el.scrollLeft >= el.scrollWidth / 2)
-          el.scrollLeft -= el.scrollWidth / 2;
-      }
-      raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    const onEnter = () => (paused = true);
-    const onLeave = () => (paused = false);
-    el.addEventListener("mouseenter", onEnter);
-    el.addEventListener("mouseleave", onLeave);
-    return () => {
-      cancelAnimationFrame(raf);
-      el.removeEventListener("mouseenter", onEnter);
-      el.removeEventListener("mouseleave", onLeave);
-    };
-  }, []);
-
-  const items = [...SAMPLE_BINS, ...SAMPLE_BINS];
+  const items = SAMPLE_BINS;
   return (
-    <div
-      ref={ref}
-      className="w-full flex gap-3 overflow-x-auto no-scrollbar py-2"
-    >
+    <div ref={ref} className="w-full grid grid-cols-2 gap-3 py-2">
       {items.map((s, i) => (
-        <div key={`${s.bin}-${i}`} className="flex-shrink-0">
+        <div key={`${s.bin}-${i}`} className="w-full">
           <BinCard brand={s.brand} bin={s.bin} onClick={onSelect} />
         </div>
       ))}
@@ -238,13 +199,6 @@ export default function App() {
             LOOKUPABIN.COM
           </span>
         </div>
-
-        {/*<p className="text-neu-muted font-body text-sm">
-          {status === "loading" && "Loading index…"}
-          {status === "ready" &&
-            `${recordCount.toLocaleString()} BINs indexed · offline · instant`}
-          {status === "error" && "⚠️ Failed to load index"}
-        </p>*/}
       </div>
       {/* Trust + Quick Test BINs section */}
       <div className="w-full max-w-md mb-6">
@@ -375,14 +329,6 @@ export default function App() {
                     );
                   })}
                 </div>
-
-                {/* Raw toggle
-              <button
-                onClick={() => setShowRaw((s) => !s)}
-                className="neu-btn-sm w-full font-body text-xs text-neu-muted"
-              >
-                {showRaw ? "▲ Hide raw" : "▼ Show raw row"}
-              </button> */}
                 {showRaw && (
                   <pre className="mt-3 p-3 neu-inset text-xs font-display text-neu-muted break-all whitespace-pre-wrap rounded-xl">
                     {result.rawRow?.split("\x1F").join(" | ")}
@@ -400,15 +346,18 @@ export default function App() {
             )}
           </div>
         )}
+
         {/* Sample BINs */}
-        <div className="neu-card p-4" style={{ marginTop: "25px" }}>
+        <div
+          className="neu-card p-4"
+          style={{ padding: "2rem", color: "white", marginTop: "1rem" }}
+        >
           <div className="mb-3">
             <div
               className="font-display text-sm tracking-widest uppercase text-neu-muted"
               style={{
                 fontSize: "12px",
                 textAlign: "center",
-                marginTop: "15px",
               }}
             >
               Try BINs from Popular Brands:
@@ -418,11 +367,9 @@ export default function App() {
             {/* Cards rendered below */}
             <ScrollingBinRow
               onSelect={(bin: string) => {
-                // format into groups of 4 for the input display
                 const formatted = bin.replace(/(.{4})/g, "$1 ").trim();
                 setInput(formatted);
                 setShowRaw(false);
-                // trigger lookup immediately
                 doLookup(bin);
               }}
             />
