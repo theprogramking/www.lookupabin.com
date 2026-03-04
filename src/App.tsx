@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import LookupWorker from "./worker/lookup.worker?worker";
 import "./index.css";
 
-// TYPES
 type LookupResult = {
   found: boolean;
   bin?: number;
@@ -11,7 +10,6 @@ type LookupResult = {
 };
 type WorkerStatus = "loading" | "ready" | "error";
 
-// LABELS
 const FIELD_LABELS: Record<string, string> = {
   Brand: "Brand",
   Type: "Type",
@@ -24,7 +22,6 @@ const FIELD_LABELS: Record<string, string> = {
   CountryName: "Country",
 };
 
-// ICONS
 const FIELD_ICONS: Record<string, string> = {
   Brand: "💳",
   Type: "⚙️",
@@ -37,7 +34,6 @@ const FIELD_ICONS: Record<string, string> = {
   CountryName: "🌍",
 };
 
-// SAMPLE BINS
 const SAMPLE_BINS = [
   { brand: "VISA", bin: "492494" },
   { brand: "AMEX", bin: "344402" },
@@ -45,7 +41,6 @@ const SAMPLE_BINS = [
   { brand: "DISCOVER", bin: "645844" },
 ];
 
-// BRAND METADATA
 const BRAND_META: Record<string, { gradient: string; label: string }> = {
   visa: { gradient: "linear-gradient(135deg,#2563eb,#1d4ed8)", label: "VISA" },
   mastercard: {
@@ -59,7 +54,6 @@ const BRAND_META: Record<string, { gradient: string; label: string }> = {
   },
 };
 
-// BIN CARD
 const BinCard = ({
   brand,
   bin,
@@ -91,47 +85,79 @@ const BinCard = ({
 
 // HORIZONTAL SCROLLER
 const ScrollingBinRow = ({ onSelect }: { onSelect: (bin: string) => void }) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
     let raf = 0;
     let last = performance.now();
     let paused = false;
-    const speed = 0.03;
+    let pos = 0;
+    const speed = 0.04;
+
+    const measure = () => {
+      return Math.max(1, track.scrollWidth / 2);
+    };
+
+    let trackWidth = measure();
+
     const step = (t: number) => {
       const dt = t - last;
       last = t;
       if (!paused) {
-        el.scrollLeft += dt * speed;
-        if (el.scrollLeft >= el.scrollWidth / 2)
-          el.scrollLeft -= el.scrollWidth / 2;
+        // advance position and wrap using modulo to avoid jumps
+        pos = (pos + dt * speed) % trackWidth;
+        track.style.transform = `translate3d(${-pos}px,0,0)`;
       }
       raf = requestAnimationFrame(step);
     };
+
     raf = requestAnimationFrame(step);
+
     const onEnter = () => (paused = true);
-    const onLeave = () => (paused = false);
-    el.addEventListener("mouseenter", onEnter);
-    el.addEventListener("mouseleave", onLeave);
+    const onLeave = () => {
+      trackWidth = measure();
+      paused = false;
+    };
+
+    container.addEventListener("mouseenter", onEnter);
+    container.addEventListener("mouseleave", onLeave);
+    const ro = new ResizeObserver(() => (trackWidth = measure()));
+    ro.observe(track);
+
     return () => {
       cancelAnimationFrame(raf);
-      el.removeEventListener("mouseenter", onEnter);
-      el.removeEventListener("mouseleave", onLeave);
+      container.removeEventListener("mouseenter", onEnter);
+      container.removeEventListener("mouseleave", onLeave);
+      ro.disconnect();
     };
   }, []);
 
   const items = [...SAMPLE_BINS, ...SAMPLE_BINS];
   return (
     <div
-      ref={ref}
-      className="w-full flex gap-3 overflow-x-auto no-scrollbar py-2"
+      ref={containerRef}
+      className="w-full relative overflow-hidden py-2"
+      style={{ touchAction: "pan-y" }}
     >
-      {items.map((s, i) => (
-        <div key={`${s.bin}-${i}`} className="flex-shrink-0">
-          <BinCard brand={s.brand} bin={s.bin} onClick={onSelect} />
-        </div>
-      ))}
+      <div
+        ref={trackRef}
+        className="flex gap-3"
+        style={{
+          willChange: "transform",
+          display: "flex",
+          alignItems: "stretch",
+        }}
+      >
+        {items.map((s, i) => (
+          <div key={`${s.bin}-${i}`} className="flex-shrink-0">
+            <BinCard brand={s.brand} bin={s.bin} onClick={onSelect} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -238,17 +264,8 @@ export default function App() {
             LOOKUPABIN.COM
           </span>
         </div>
-
-        {/*<p className="text-neu-muted font-body text-sm">
-          {status === "loading" && "Loading index…"}
-          {status === "ready" &&
-            `${recordCount.toLocaleString()} BINs indexed · offline · instant`}
-          {status === "error" && "⚠️ Failed to load index"}
-        </p>*/}
       </div>
-      {/* Trust + Quick Test BINs section */}
       <div className="w-full max-w-md mb-6">
-        {/* Safety banner */}
         <div
           className="rounded-xl mb-4 px-4 py-3 text-center"
           style={{
@@ -272,7 +289,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Input Card */}
+        {/* INPUT CARD */}
         <div className="neu-card w-full max-w-md p-8 mb-6">
           <label
             htmlFor="bin-input"
@@ -297,6 +314,25 @@ export default function App() {
               ${canLookup ? "text-neu-accent" : ""}
             `}
             />
+            {input.length > 0 && (
+              <button
+                onClick={() => {
+                  setInput("");
+                  setResult(null);
+                  setShowRaw(false);
+                  setSearching(false);
+                  if (debounceRef.current) {
+                    window.clearTimeout(debounceRef.current);
+                    debounceRef.current = null;
+                  }
+                }}
+                aria-label="Clear input"
+                className="neu-btn-sm absolute right-3 top-1/2 -translate-y-1/2"
+                style={{ padding: "8px", borderRadius: 10 }}
+              >
+                ✖
+              </button>
+            )}
             {searching && (
               <div className="absolute right-4 top-1/2 -translate-y-1/2">
                 <div className="spinner" />
@@ -307,14 +343,13 @@ export default function App() {
             Enter at least 6 digits — results appear instantly
           </p>
         </div>
-        {/* Result Card */}
+        {/* RESULT CARD */}
         {result !== null && (
           <div
             className={`neu-card w-full max-w-md p-6 transition-all duration-300 ${result.found ? "" : "opacity-70"}`}
           >
             {result.found && result.fields ? (
               <>
-                {/* Brand badge */}
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-3">
                     <div className="neu-pill font-display text-lg font-bold text-neu-accent px-4 py-1">
@@ -339,8 +374,6 @@ export default function App() {
                     {copied ? "✅ Copied" : "📋 Copy"}
                   </button>
                 </div>
-
-                {/* Fields grid */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {Object.entries(FIELD_LABELS).map(([key, label]) => {
                     const val = result.fields![key];
@@ -375,14 +408,6 @@ export default function App() {
                     );
                   })}
                 </div>
-
-                {/* Raw toggle
-              <button
-                onClick={() => setShowRaw((s) => !s)}
-                className="neu-btn-sm w-full font-body text-xs text-neu-muted"
-              >
-                {showRaw ? "▲ Hide raw" : "▼ Show raw row"}
-              </button> */}
                 {showRaw && (
                   <pre className="mt-3 p-3 neu-inset text-xs font-display text-neu-muted break-all whitespace-pre-wrap rounded-xl">
                     {result.rawRow?.split("\x1F").join(" | ")}
@@ -400,8 +425,11 @@ export default function App() {
             )}
           </div>
         )}
-        {/* Sample BINs */}
-        <div className="neu-card p-4" style={{ marginTop: "25px" }}>
+        {/* SAMPLE BINS */}
+        <div
+          className="neu-card p-4"
+          style={{ marginTop: "25px", color: "#FFF" }}
+        >
           <div className="mb-3">
             <div
               className="font-display text-sm tracking-widest uppercase text-neu-muted"
@@ -415,20 +443,18 @@ export default function App() {
             </div>
           </div>
           <div className="flex gap-3 overflow-x-auto py-2">
-            {/* Cards rendered below */}
             <ScrollingBinRow
               onSelect={(bin: string) => {
-                // format into groups of 4 for the input display
                 const formatted = bin.replace(/(.{4})/g, "$1 ").trim();
                 setInput(formatted);
                 setShowRaw(false);
-                // trigger lookup immediately
                 doLookup(bin);
               }}
             />
           </div>
         </div>
       </div>
+      {/* FOOTER */}
       <p
         className="mt-8 text-xs text-neu-muted font-body text-center opacity-60"
         style={{ color: "#000" }}
