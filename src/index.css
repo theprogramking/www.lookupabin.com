@@ -39,7 +39,7 @@
   --neu-accent: #7a72ff;
   --neu-accent2: #ff6f8d;
   --neu-text: #e6ebf2;
-  --neu-muted: black;
+  --neu-muted: #6b7280;
 }
 * {
   box-sizing: border-box;
@@ -54,7 +54,7 @@ body {
 /* ─── Neumorphism base components ─────────────────────────────────────────── */
 
 .neu-bg {
-  background: linear-gradient(to bottom right, #1e3a8a, #1e40af, #1e3b70);
+  background: #f6f6f6;
 }
 
 .neu-card {
@@ -80,24 +80,14 @@ body {
 }
 
 .neu-input {
-  background: #ffffff;
-  border: none;
+  background: #f6f6f6;
+  border: 3px solid #f6f6f6;
   outline: none;
   border-radius: 14px;
   padding: 14px 20px;
-  box-shadow:
-    inset 2px 2px 5px var(--neu-dark),
-    inset -2px -2px 5px var(--neu-light);
   font-family: "DM Mono", monospace;
+  caret-color: var(--neu-accent);
   transition: box-shadow 0.2s ease;
-  color: black;
-}
-
-.neu-input:focus {
-  box-shadow:
-    inset 2.5px 2.5px 5.5px var(--neu-dark),
-    inset -2.5px -2.5px 5.5px var(--neu-light),
-    0 0 0 1px color-mix(in srgb, var(--neu-accent) 30%, transparent);
 }
 
 .neu-input::placeholder {

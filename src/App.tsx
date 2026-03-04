@@ -224,18 +224,18 @@ export default function App() {
   return (
     <div className="min-h-screen neu-bg flex flex-col items-center justify-center px-4 py-12">
       <div className="mb-10 text-center">
-        <div
-          className="neu-card-flat inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl"
-          style={{
-            background: "white",
-            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
-          }}
-        >
+        <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
           <span className="text-2xl" style={{ paddingBottom: 5 }}>
             💳
           </span>
-          <span className="font-display text-sm tracking-widest uppercase text-neu-muted">
-            BIN Lookup
+          <span
+            className="font-display text-sm tracking-widest uppercase text-neu-muted"
+            style={{
+              textDecoration: "underline",
+              textUnderlineOffset: "5px",
+            }}
+          >
+            LOOKUPABIN.COM
           </span>
         </div>
 
@@ -408,6 +408,7 @@ export default function App() {
               style={{
                 fontSize: "12px",
                 textAlign: "center",
+                marginTop: "15px",
               }}
             >
               Try BINs from Popular Brands:
@@ -430,7 +431,7 @@ export default function App() {
       </div>
       <p
         className="mt-8 text-xs text-neu-muted font-body text-center opacity-60"
-        style={{ color: "#ffffff" }}
+        style={{ color: "#000" }}
       >
         Offline · No API calls · Data stays in your browser
       </p>
