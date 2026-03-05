@@ -33,13 +33,54 @@
   scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
 }
 :root {
-  --neu-bg: #0d0e10;
-  --neu-dark: #0d0e10;
-  --neu-light: #15181b;
+  /* Theme variables (default = dark per design spec) */
+  --transition-duration: 0.3s;
+
+  /* Dark theme palette (default values) */
+  --bg: #010409; /* Primary Background */
+  --surface: #0d1117; /* Secondary Surface (Cards/Nav) */
+  --border: #151b23; /* Borders/Accents */
+  --text: #c9d1d9; /* Text (off-white) */
+  /* Pill (brand) inversion: dark uses light pill, light uses dark pill */
+  --pill-bg: #C4C4C4; /* in dark mode show light pill */
+  --pill-text: #010409;
+
+  /* Map existing neu-* tokens to the theme variables for compatibility */
+  --neu-bg: var(--bg);
+  --neu-dark: var(--surface);
+  --neu-light: var(--border);
   --neu-accent: #7a72ff;
   --neu-accent2: #ff6f8d;
-  --neu-text: #e6ebf2;
+  --neu-text: var(--text);
   --neu-muted: #6b7280;
+}
+
+/* Light theme overrides when .light is present on the document element */
+.light {
+  --bg: #f6f6f6;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --text: #0b1220;
+
+  --neu-bg: var(--bg);
+  --neu-dark: var(--surface);
+  --neu-light: var(--border);
+  --neu-text: var(--text);
+  --pill-bg: #010409; /* in light mode show dark pill */
+  --pill-text: var(--text);
+}
+
+/* Also expose a .dark class for explicit dark-mode toggling */
+.dark {
+  --bg: #010409;
+  --surface: #0d1117;
+  --border: #151b23;
+  --text: #c9d1d9;
+
+  --neu-bg: var(--bg);
+  --neu-dark: var(--surface);
+  --neu-light: var(--border);
+  --neu-text: var(--text);
 }
 * {
   box-sizing: border-box;
@@ -49,16 +90,20 @@ body {
   color: var(--neu-text);
   font-family: "DM Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
+  background: var(--neu-bg);
+  transition:
+    background-color var(--transition-duration) ease,
+    color var(--transition-duration) ease;
 }
 
 /* ─── Neumorphism base components ─────────────────────────────────────────── */
 
 .neu-bg {
-  background: #f6f6f6;
+  background: var(--neu-bg);
 }
 
 .neu-card {
-  background: #ffffff;
+  background: var(--neu-dark);
   border-radius: 20px;
   transition: box-shadow 0.2s ease;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
@@ -67,27 +112,36 @@ body {
 .neu-card-flat {
   background: linear-gradient(to bottom right, #1e3a8a, #2563eb, #4f46e5);
   border-radius: 14px;
-  color: white;
+  color: var(--neu-text);
+}
+
+/* Keep Popular Bins card text white for contrast */
+.popular-bins {
+  color: #ffffff;
 }
 
 .neu-field-card {
-  color: #000000;
+  color: var(--neu-text);
 }
 
 .neu-pill {
-  background: var(--neu-bg);
+  background: var(--pill-bg);
+  color: var(--pill-text);
   border-radius: 999px;
 }
 
 .neu-input {
-  background: #f6f6f6;
-  border: 3px solid #f6f6f6;
+  background: var(--neu-dark);
+  border: 1px solid var(--neu-light);
   outline: none;
   border-radius: 14px;
   padding: 14px 20px;
   font-family: "DM Mono", monospace;
   caret-color: var(--neu-accent);
-  transition: box-shadow 0.2s ease;
+  transition:
+    background-color var(--transition-duration) ease,
+    color var(--transition-duration) ease,
+    border-color var(--transition-duration) ease;
 }
 
 .neu-input::placeholder {
@@ -102,7 +156,7 @@ body {
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: "DM Sans", sans-serif;
-  color: #000;
+  color: var(--neu-text);
 }
 
 .neu-btn-sm:hover {
@@ -111,6 +165,20 @@ body {
 
 .neu-inset {
   background: var(--neu-bg);
+}
+
+/* Smooth transitions for common themeable elements */
+.neu-card,
+.neu-input,
+.neu-pill,
+.neu-field-card,
+.neu-card-flat,
+.sample-bin-card {
+  transition:
+    background-color var(--transition-duration) ease,
+    color var(--transition-duration) ease,
+    border-color var(--transition-duration) ease,
+    box-shadow var(--transition-duration) ease;
 }
 
 /* ─── Spinner ─────────────────────────────────────────────────────────────── */
@@ -136,7 +204,7 @@ body {
   color: var(--neu-accent);
 }
 .text-neu-text {
-  color: #000000;
+  color: var(--neu-text);
 }
 .text-neu-muted {
   color: var(--neu-muted);
@@ -166,12 +234,12 @@ body {
 .sample-bin-row {
   display: flex;
   gap: 12px;
-  color: #fff;
+  color: var(--neu-text);
 }
 
 .sample-bin-card {
   border-radius: 14px;
-  background: white;
+  background: var(--neu-dark);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   padding: 12px;
   min-width: 160px;

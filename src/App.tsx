@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import LookupWorker from "./worker/lookup.worker?worker";
 import "./index.css";
+import ThemeToggle from "./ThemeToggle";
 
 type LookupResult = {
   found: boolean;
@@ -64,7 +65,8 @@ const BinCard = ({
   onClick: (b: string) => void;
 }) => {
   const meta = BRAND_META[brand.toLowerCase()] ?? {
-    gradient: "linear-gradient(135deg,#eef2ff,#fff)",
+    gradient:
+      "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
     label: brand.slice(0, 3),
   };
   return (
@@ -75,7 +77,7 @@ const BinCard = ({
       style={{ background: meta.gradient }}
     >
       <div className="w-full flex items-center justify-between">
-        <div className="font-display font-bold text-sm">{brand}</div>
+        <div className="font-display text-sm">{brand}</div>
         <div className="text-xs font-mono opacity-90">{meta.label}</div>
       </div>
       <div className="mt-2 font-mono text-lg">{bin}</div>
@@ -248,7 +250,14 @@ export default function App() {
   const canLookup = digits.length >= 6;
 
   return (
-    <div className="min-h-screen neu-bg flex flex-col items-center justify-center px-4 py-12">
+    <div
+      className="min-h-screen neu-bg flex flex-col items-center justify-center px-4 py-12"
+      style={{ position: "relative" }}
+    >
+      {/* Theme toggle positioned top-right */}
+      <div style={{ position: "absolute", right: 18, top: 18 }}>
+        <ThemeToggle />
+      </div>
       <div className="mb-10 text-center">
         <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
           <span className="text-2xl" style={{ paddingBottom: 5 }}>
@@ -269,12 +278,16 @@ export default function App() {
         <div
           className="rounded-xl mb-4 px-4 py-3 text-center"
           style={{
-            background: "#fff9e6",
+            background: "var(--surface)",
             boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
             borderRadius: 14,
+            color: "var(--neu-text)",
           }}
         >
-          <div className="font-body text-sm text-black/85">
+          <div
+            className="font-body text-sm"
+            style={{ color: "var(--neu-text)" }}
+          >
             Your card & bank information is safe. We do not store or view any
             data you enter. View the code{" "}
             <u>
@@ -427,12 +440,12 @@ export default function App() {
         )}
         {/* SAMPLE BINS */}
         <div
-          className="neu-card p-4"
-          style={{ marginTop: "25px", color: "#FFF" }}
+          className="neu-card p-4 popular-bins"
+          style={{ marginTop: "25px" }}
         >
           <div className="mb-3">
             <div
-              className="font-display text-sm tracking-widest uppercase text-neu-muted"
+              className="font-display text-sm tracking-widest uppercase text-neu-muted text-neu-text"
               style={{
                 fontSize: "12px",
                 textAlign: "center",
@@ -457,7 +470,7 @@ export default function App() {
       {/* FOOTER */}
       <p
         className="mt-8 text-xs text-neu-muted font-body text-center opacity-60"
-        style={{ color: "#000" }}
+        style={{ color: "var(--neu-text)" }}
       >
         Offline · No API calls · Data stays in your browser
       </p>
