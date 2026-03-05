@@ -274,13 +274,15 @@ export default function App() {
           </span>
         </div>
       </div>
-      <div className="w-full max-w-md mb-6">
+      <div
+        className="w-full max-w-md mb-6"
+        style={{
+          background: "none",
+        }}
+      >
         <div
           className="rounded-xl mb-4 px-4 py-3 text-center"
           style={{
-            background: "var(--surface)",
-            boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
-            borderRadius: 14,
             color: "var(--neu-text)",
           }}
         >
@@ -441,7 +443,7 @@ export default function App() {
         {/* SAMPLE BINS */}
         <div
           className="neu-card p-4 popular-bins"
-          style={{ marginTop: "25px" }}
+          style={{ marginTop: "25px", background: "none", boxShadow: "none" }}
         >
           <div className="mb-3">
             <div
