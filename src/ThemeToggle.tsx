@@ -35,7 +35,7 @@ export default function ThemeToggle() {
       className="neu-btn-sm"
       style={{
         borderRadius: 6,
-        border: `3px solid var(--neu-light)`,
+        border: `1px solid var(--neu-light)`,
         padding: "8px 10px",
         display: "inline-flex",
         alignItems: "center",
