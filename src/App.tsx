@@ -260,9 +260,7 @@ export default function App() {
       </div>
       <div className="mb-10 text-center">
         <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
-          <span className="text-2xl" style={{ marginBottom: 5 }}>
-            💳
-          </span>
+          <span className="text-2xl">💳</span>
           <span
             className="font-display text-sm tracking-widest uppercase"
             style={{
@@ -301,7 +299,7 @@ export default function App() {
         <div className="neu-card w-full max-w-md p-8 mb-6">
           <label
             htmlFor="bin-input"
-            className="block font-display text-xs tracking-widest uppercase text-neu-muted mb-4"
+            className="block font-display text-sm tracking-widest uppercase text-neu-muted mb-4"
           >
             Bank Identification Number:
           </label>
