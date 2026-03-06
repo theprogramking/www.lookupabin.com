@@ -440,8 +440,9 @@ export default function App() {
         >
           <div className="mb-3">
             <div
-              className="font-body text-sm text-neu-muted"
+              className="font-display text-sm tracking-widest uppercase text-neu-muted text-neu-text"
               style={{
+                fontSize: "12px",
                 textAlign: "center",
                 marginTop: "15px",
               }}
