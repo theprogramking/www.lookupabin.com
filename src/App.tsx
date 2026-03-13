@@ -262,7 +262,7 @@ export default function App() {
         <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
           <span className="text-2xl">💳</span>
           <span
-            className="font-display text-sm tracking-widest uppercase text-neu-muted"
+            className="font-display text-sm tracking-widest uppercase"
             style={{
               textDecoration: "underline",
               textUnderlineOffset: "5px",
@@ -279,7 +279,7 @@ export default function App() {
         }}
       >
         <div className="rounded-xl mb-4 px-4 py-3 text-center">
-          <div className="font-body text-sm text-neu-muted">
+          <div className="font-body text-sm">
             Your card & bank information is safe. We do not store or view any
             data you enter. View the code{" "}
             <u>
@@ -345,7 +345,7 @@ export default function App() {
               </div>
             )}
           </div>
-          <p className="mt-3 text-xs text-neu-muted font-body">
+          <p className="mt-3 text-xs text- font-body">
             Enter at least 6 digits — results appear instantly
           </p>
         </div>
@@ -375,7 +375,7 @@ export default function App() {
                   </div>
                   <button
                     onClick={handleCopy}
-                    className="neu-btn-sm font-body text-xs text-neu-muted flex items-center gap-1"
+                    className="neu-btn-sm font-body text-xs text- flex items-center gap-1"
                   >
                     {copied ? "✅ Copied" : "📋 Copy"}
                   </button>
@@ -390,7 +390,7 @@ export default function App() {
                         key={key}
                         className="neu-field-card p-3 rounded-xl col-span-1"
                       >
-                        <div className="text-xs text-neu-muted font-body mb-1 flex items-center gap-1">
+                        <div className="text-xs text- font-body mb-1 flex items-center gap-1">
                           <span>{FIELD_ICONS[key]}</span>
                           <span>{label}</span>
                         </div>
@@ -415,7 +415,7 @@ export default function App() {
                   })}
                 </div>
                 {showRaw && (
-                  <pre className="mt-3 p-3 neu-inset text-xs font-display text-neu-muted break-all whitespace-pre-wrap rounded-xl">
+                  <pre className="mt-3 p-3 neu-inset text-xs font-display break-all whitespace-pre-wrap rounded-xl">
                     {result.rawRow?.split("\x1F").join(" | ")}
                   </pre>
                 )}
@@ -423,7 +423,7 @@ export default function App() {
             ) : (
               <div className="text-center py-4">
                 <div className="text-3xl mb-2">🔍</div>
-                <div className="font-display text-neu-muted text-sm">
+                <div className="font-display text-sm">
                   No record found for BIN{" "}
                   <span className="text-neu-accent">{digits.slice(0, 6)}</span>
                 </div>
@@ -438,7 +438,7 @@ export default function App() {
         >
           <div className="mb-3">
             <div
-              className="font-display text-sm tracking-widest uppercase text-neu-muted text-neu-text"
+              className="font-display text-sm tracking-widest uppercase text-neu-text"
               style={{
                 fontSize: "12px",
                 textAlign: "center",
@@ -462,7 +462,7 @@ export default function App() {
       </div>
       {/* FOOTER */}
       <p
-        className="mt-8 text-xs text-neu-muted font-body text-center opacity-60"
+        className="mt-8 text-xs font-body text-center"
         style={{ color: "var(--neu-text)" }}
       >
         Offline · No API calls · Data stays in your browser
