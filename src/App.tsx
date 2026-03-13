@@ -462,7 +462,7 @@ export default function App() {
       </div>
       {/* FOOTER */}
       <p
-        className="mt-8 text-xs font-body text-center"
+        className="mt-8 text-xs font-body text-center opacity-60"
         style={{ color: "var(--neu-text)" }}
       >
         Offline · No API calls · Data stays in your browser
