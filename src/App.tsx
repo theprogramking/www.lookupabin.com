@@ -278,8 +278,14 @@ export default function App() {
           background: "none",
         }}
       >
-        <div className="rounded-xl mb-4 px-4 py-3 text-center">
-          <div className="font-body text-sm">
+        <div
+          className="rounded-xl mb-4 px-4 py-3 text-center"
+          style={{
+            background: "rgb(255, 249, 230)",
+            boxShadow: "rgba(0, 0, 0, 0.15) 0px 20px 50px 0px",
+          }}
+        >
+          <div className="font-body text-sm" style={{ color: "black" }}>
             Your card & bank information is safe. We do not store or view any
             data you enter. View the code{" "}
             <u>
@@ -434,7 +440,7 @@ export default function App() {
         {/* SAMPLE BINS */}
         <div
           className="neu-card p-4 popular-bins"
-          style={{ marginTop: "25px", background: "none", boxShadow: "none" }}
+          style={{ marginTop: "2.5rem", background: "none", boxShadow: "none" }}
         >
           <div className="mb-3">
             <div
@@ -442,13 +448,16 @@ export default function App() {
               style={{
                 fontSize: "12px",
                 textAlign: "center",
-                marginTop: "15px",
+                marginTop: "16px",
               }}
             >
               Try BINs from Popular Brands:
             </div>
           </div>
-          <div className="flex gap-3 overflow-x-auto py-2">
+          <div
+            className="flex gap-3 overflow-x-auto py-2"
+            style={{ paddingTop: "0" }}
+          >
             <ScrollingBinRow
               onSelect={(bin: string) => {
                 const formatted = bin.replace(/(.{4})/g, "$1 ").trim();
