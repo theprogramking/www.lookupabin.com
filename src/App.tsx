@@ -278,14 +278,8 @@ export default function App() {
           background: "none",
         }}
       >
-        <div
-          className="rounded-xl mb-4 px-4 py-3 text-center"
-          style={{
-            background: "rgb(255, 249, 230)",
-            boxShadow: "rgba(0, 0, 0, 0.15) 0px 20px 50px 0px",
-          }}
-        >
-          <div className="font-body text-sm" style={{ color: "black" }}>
+        <div className="rounded-xl mb-4 px-4 py-3 text-center">
+          <div className="font-body text-sm">
             Your card & bank information is safe. We do not store or view any
             data you enter. View the code{" "}
             <u>
@@ -317,7 +311,7 @@ export default function App() {
               pattern="[0-9\s\-]*"
               value={input}
               onChange={handleInput}
-              placeholder="4111 1111 1111 1111"
+              placeholder="4111 11..."
               autoComplete="off"
               autoFocus
               className={`
@@ -351,7 +345,10 @@ export default function App() {
               </div>
             )}
           </div>
-          <p className="mt-3 text-xs text- font-body">
+          <p
+            className="mt-3 text-xs text- font-body"
+            style={{ letterSpacing: "0.05rem" }}
+          >
             Enter at least 6 digits — results appear instantly
           </p>
         </div>
