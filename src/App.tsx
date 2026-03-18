@@ -260,16 +260,11 @@ export default function App() {
       </div>
       <div className="mb-10 text-center">
         <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
-          <span className="text-2xl">💳</span>
-          <span
-            className="font-display text-sm tracking-widest uppercase"
-            style={{
-              textDecoration: "underline",
-              textUnderlineOffset: "5px",
-            }}
-          >
-            LOOKUPABIN.COM
+          <span className="text-2xl">&gt;</span>
+          <span className="font-display text-sm tracking-widest uppercase">
+            BIN LOOKUP
           </span>
+          <span className="text-2xl">&lt;</span>
         </div>
       </div>
       <div
