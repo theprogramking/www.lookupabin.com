@@ -37,7 +37,6 @@ const FIELD_ICONS: Record<string, string> = {
 
 const SAMPLE_BINS = [
   { brand: "VISA", bin: "492494" },
-  { brand: "AMEX", bin: "344402" },
   { brand: "MASTERCARD", bin: "543421" },
   { brand: "DISCOVER", bin: "645844" },
 ];
