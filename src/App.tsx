@@ -258,7 +258,7 @@ export default function App() {
       <div style={{ position: "absolute", right: 18, top: 18 }}>
         <ThemeToggle />
       </div>
-      <div className="mb-10 text-center">
+      <div className="mb-10 text-center" style={{ marginBottom: "0" }}>
         <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
           <span className="text-2xl">&gt;</span>
           <span className="font-display text-sm tracking-widest uppercase">
@@ -273,7 +273,10 @@ export default function App() {
           background: "none",
         }}
       >
-        <div className="rounded-xl mb-4 px-4 py-3 text-center">
+        <div
+          className="rounded-xl mb-4 px-4 py-3 text-center"
+          style={{ marginBottom: "2rem" }}
+        >
           <div className="font-body text-sm">
             Your card & bank information is safe. We do not store or view any
             data you enter. View the code{" "}
