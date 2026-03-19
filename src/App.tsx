@@ -505,7 +505,6 @@ export default function App() {
               style={{
                 fontSize: "12px",
                 textAlign: "center",
-                marginTop: "16px",
               }}
             >
               Try BINs from Popular Brands:
@@ -528,7 +527,7 @@ export default function App() {
       </div>
       {/* FOOTER */}
       <p
-        className="mt-8 text-xs font-body text-center opacity-60"
+        className="text-xs font-body text-center opacity-60"
         style={{ color: "var(--neu-text)" }}
       >
         Offline · No API calls · Data stays in your browser
