@@ -38,19 +38,73 @@ const FIELD_ICONS: Record<string, string> = {
 const SAMPLE_BINS = [
   { brand: "VISA", bin: "492494" },
   { brand: "MASTERCARD", bin: "543421" },
+  { brand: "AMEX", bin: "371449" },
   { brand: "DISCOVER", bin: "645844" },
+  { brand: "DINERS", bin: "305693" },
+  { brand: "JCB", bin: "353011" },
+  { brand: "MAESTRO", bin: "675964" },
+  { brand: "RUPAY", bin: "508159" },
+  { brand: "ELO", bin: "636297" },
+  { brand: "HIPER", bin: "637095" },
+  { brand: "VERVE", bin: "506099" },
 ];
 
 const BRAND_META: Record<string, { gradient: string; label: string }> = {
   visa: { gradient: "linear-gradient(135deg,#2563eb,#1d4ed8)", label: "VISA" },
+
   mastercard: {
     gradient: "linear-gradient(135deg,#ff5f00,#eb001b)",
     label: "MC",
   },
-  amex: { gradient: "linear-gradient(135deg,#b8860b,#ffd700)", label: "AMEX" },
+
+  amex: {
+    gradient: "linear-gradient(135deg,#b8860b,#ffd700)",
+    label: "AMEX",
+  },
+
   discover: {
     gradient: "linear-gradient(135deg,#ff6000,#ffcc00)",
     label: "DISC",
+  },
+
+  diners: {
+    gradient: "linear-gradient(135deg,#7c3aed,#a855f7)",
+    label: "DINERS",
+  },
+
+  jcb: {
+    gradient: "linear-gradient(135deg,#0f766e,#14b8a6)",
+    label: "JCB",
+  },
+
+  maestro: {
+    gradient: "linear-gradient(135deg,#ef4444,#3b82f6)",
+    label: "MAESTRO",
+  },
+
+  rupay: {
+    gradient: "linear-gradient(135deg,#2563eb,#22c55e)",
+    label: "RUPAY",
+  },
+
+  elo: {
+    gradient: "linear-gradient(135deg,#f97316,#ec4899)",
+    label: "ELO",
+  },
+
+  hiper: {
+    gradient: "linear-gradient(135deg,#8b5cf6,#06b6d4)",
+    label: "HIPER",
+  },
+
+  hipercard: {
+    gradient: "linear-gradient(135deg,#db2777,#f43f5e)",
+    label: "HIPER",
+  },
+
+  verve: {
+    gradient: "linear-gradient(135deg,#16a34a,#22c55e)",
+    label: "VERVE",
   },
 };
 
