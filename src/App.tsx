@@ -313,11 +313,18 @@ export default function App() {
       </div>
       <div className="mb-10 text-center" style={{ marginBottom: "0" }}>
         <div className="inline-flex items-center gap-3 px-6 py-3 mb-4 rounded-2xl">
-          <span className="text-2xl">&gt;</span>
-          <span className="font-display text-sm tracking-widest uppercase">
+          <span className="text-2xl" style={{ marginBottom: "2.5px " }}>
+            &gt;
+          </span>
+          <span
+            className="font-display tracking-widest uppercase"
+            style={{ textAlign: "center" }}
+          >
             BIN LOOKUP
           </span>
-          <span className="text-2xl">&lt;</span>
+          <span className="text-2xl" style={{ marginBottom: "2.5px " }}>
+            &lt;
+          </span>
         </div>
       </div>
       <div
@@ -330,7 +337,7 @@ export default function App() {
           className="rounded-xl mb-4 px-4 py-3 text-center"
           style={{ marginBottom: "2rem" }}
         >
-          <div className="font-body text-sm">
+          <div className="font-body">
             Your card & bank information is safe. We do not store or view any
             data you enter. View the code{" "}
             <u>
@@ -350,7 +357,7 @@ export default function App() {
         <div className="neu-card w-full max-w-md p-8 mb-6">
           <label
             htmlFor="bin-input"
-            className="block font-display text-sm tracking-widest uppercase neu-dark mb-4"
+            className="block font-display tracking-widest uppercase neu-dark mb-4"
           >
             Bank Identification Number:
           </label>

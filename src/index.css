@@ -42,7 +42,7 @@
   --border: #151b23; /* Borders/Accents */
   --text: #c9d1d9; /* Text (off-white) */
   /* Pill (brand) inversion: dark uses light pill, light uses dark pill */
-  --pill-bg: #C4C4C4; /* in dark mode show light pill */
+  --pill-bg: #fff; /* in dark mode show light pill */
   --pill-text: #010409;
 
   /* Map existing neu-* tokens to the theme variables for compatibility */
@@ -106,7 +106,6 @@ body {
   background: var(--neu-dark);
   border-radius: 20px;
   transition: box-shadow 0.2s ease;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
 .neu-card-flat {
@@ -207,7 +206,6 @@ body {
   color: var(--neu-text);
 }
 .text-neu-muted {
-  
 }
 .text-neu-dark {
   color: var(--neu-dark);
