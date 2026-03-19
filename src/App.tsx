@@ -402,89 +402,91 @@ export default function App() {
           >
             Enter at least 6 digits — results appear instantly
           </p>
-        </div>
-        {/* RESULT CARD */}
-        {result !== null && (
-          <div
-            className={`neu-card w-full max-w-md p-6 transition-all duration-300 ${result.found ? "" : "opacity-70"}`}
-          >
-            {result.found && result.fields ? (
-              <>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="neu-pill font-display text-lg font-bold text-neu-accent px-4 py-1">
-                      {result.fields.Brand || "UNKNOWN"}
+          {/* RESULT CARD */}
+          {result !== null && (
+            <div
+              className={`w-full max-w-md pt-8 transition-all duration-300 ${result.found ? "" : "opacity-70"}`}
+            >
+              {result.found && result.fields ? (
+                <>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-3">
+                      <div className="neu-pill font-display text-lg font-bold text-neu-accent px-4 py-1">
+                        {result.fields.Brand || "UNKNOWN"}
+                      </div>
+                      <span
+                        className={`text-xs font-display uppercase tracking-widest px-3 py-1 rounded-full ${
+                          result.fields.Type === "CREDIT"
+                            ? "bg-purple-100 text-purple-600"
+                            : result.fields.Type === "DEBIT"
+                              ? "bg-green-100 text-green-600"
+                              : "bg-gray-100 text-gray-500"
+                        }`}
+                      >
+                        {result.fields.Type || "—"}
+                      </span>
                     </div>
-                    <span
-                      className={`text-xs font-display uppercase tracking-widest px-3 py-1 rounded-full ${
-                        result.fields.Type === "CREDIT"
-                          ? "bg-purple-100 text-purple-600"
-                          : result.fields.Type === "DEBIT"
-                            ? "bg-green-100 text-green-600"
-                            : "bg-gray-100 text-gray-500"
-                      }`}
+                    <button
+                      onClick={handleCopy}
+                      className="neu-btn-sm font-body text-xs text- flex items-center gap-1"
                     >
-                      {result.fields.Type || "—"}
+                      {copied ? "✅ Copied" : "📋 Copy"}
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    {Object.entries(FIELD_LABELS).map(([key, label]) => {
+                      const val = result.fields![key];
+                      if (!val) return null;
+                      const isUrl = key === "IssuerUrl";
+                      return (
+                        <div
+                          key={key}
+                          className="neu-field-card p-3 rounded-xl col-span-1"
+                        >
+                          <div className="text-xs text- font-body mb-1 flex items-center gap-1">
+                            <span>{FIELD_ICONS[key]}</span>
+                            <span>{label}</span>
+                          </div>
+                          {isUrl ? (
+                            <a
+                              href={
+                                val.startsWith("http") ? val : `https://${val}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm font-display text-neu-accent truncate block hover:underline"
+                            >
+                              {val.replace(/^https?:\/\//, "")}
+                            </a>
+                          ) : (
+                            <div className="text-sm font-display text-neu-text truncate">
+                              {val}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {showRaw && (
+                    <pre className="mt-3 p-3 neu-inset text-xs font-display break-all whitespace-pre-wrap rounded-xl">
+                      {result.rawRow?.split("\x1F").join(" | ")}
+                    </pre>
+                  )}
+                </>
+              ) : (
+                <div className="text-center py-4">
+                  <div className="text-3xl mb-2">🔍</div>
+                  <div className="font-display text-sm">
+                    No record found for BIN{" "}
+                    <span className="text-neu-accent">
+                      {digits.slice(0, 6)}
                     </span>
                   </div>
-                  <button
-                    onClick={handleCopy}
-                    className="neu-btn-sm font-body text-xs text- flex items-center gap-1"
-                  >
-                    {copied ? "✅ Copied" : "📋 Copy"}
-                  </button>
                 </div>
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  {Object.entries(FIELD_LABELS).map(([key, label]) => {
-                    const val = result.fields![key];
-                    if (!val) return null;
-                    const isUrl = key === "IssuerUrl";
-                    return (
-                      <div
-                        key={key}
-                        className="neu-field-card p-3 rounded-xl col-span-1"
-                      >
-                        <div className="text-xs text- font-body mb-1 flex items-center gap-1">
-                          <span>{FIELD_ICONS[key]}</span>
-                          <span>{label}</span>
-                        </div>
-                        {isUrl ? (
-                          <a
-                            href={
-                              val.startsWith("http") ? val : `https://${val}`
-                            }
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm font-display text-neu-accent truncate block hover:underline"
-                          >
-                            {val.replace(/^https?:\/\//, "")}
-                          </a>
-                        ) : (
-                          <div className="text-sm font-display text-neu-text truncate">
-                            {val}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-                {showRaw && (
-                  <pre className="mt-3 p-3 neu-inset text-xs font-display break-all whitespace-pre-wrap rounded-xl">
-                    {result.rawRow?.split("\x1F").join(" | ")}
-                  </pre>
-                )}
-              </>
-            ) : (
-              <div className="text-center py-4">
-                <div className="text-3xl mb-2">🔍</div>
-                <div className="font-display text-sm">
-                  No record found for BIN{" "}
-                  <span className="text-neu-accent">{digits.slice(0, 6)}</span>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
         {/* SAMPLE BINS */}
         <div
           className="neu-card p-4 popular-bins"
